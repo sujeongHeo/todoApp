@@ -1,13 +1,7 @@
 import './main.css';
-import { calTime } from './timeCal';
+import { dateDiff } from './timeCal';
 
-// import styles from './index.module.css';
-
-const addClass = document.getElementsByClassName('addBtn');
-addClass[0].addEventListener("click", function () {
-  newElement();
-});
-
+//목록을 가져와요
 var myNodelist = document.getElementsByTagName("LI");
 var i;
 for (i = 0; i < myNodelist.length; i++) {
@@ -18,8 +12,9 @@ for (i = 0; i < myNodelist.length; i++) {
   myNodelist[i].appendChild(span);
 }
 
-// Click on a close button to hide the current list item
+// x 버튼 누르면 목록이 안 보여요.
 var close = document.getElementsByClassName("close");
+
 var i;
 for (i = 0; i < close.length; i++) {
   close[i].onclick = function() {
@@ -28,7 +23,7 @@ for (i = 0; i < close.length; i++) {
   }
 }
 
-// Add a "checked" symbol when clicking on a list item
+// 리스트 아이템을 누르면, 체크가 되어요.
 var list = document.querySelector('ul');
 list.addEventListener('click', function(ev) {
   if (ev.target.tagName === 'LI') {
@@ -36,16 +31,23 @@ list.addEventListener('click', function(ev) {
   }
 }, false);
 
-// Create a new list item when clicking on the "Add" button
-function newElement() {
+const addClass = document.getElementsByClassName('addBtn');
+addClass[0].addEventListener("click", function () {
+  addList();
+});
+
+// 새로운 아이템을 입력해요 
+function addList() {
   var li = document.createElement("li");
   var inputCon = document.getElementById("myContent").value;
+  // 완료 날짜를 입력해요
   var inputDue = document.getElementById("myDue").value;
-  console.log(calTime(inputDue),"sdfsdf");
   var ct = document.createTextNode(inputCon);
   li.appendChild(ct);
+  
+  // 내용이 비워져있으면 안돼요.
   if (inputCon === '') {
-    alert("You must write something!");
+    alert("내용 입력은 필수 입니다..");
   } else {
     document.getElementById("myUL").appendChild(li);
   }
@@ -57,11 +59,13 @@ function newElement() {
   span.appendChild(txt);
   li.appendChild(span);
 
-  var spans = document.createElement("SPAN");
-  var txts = document.createTextNode("- " + calTime(inputDue));
-  spans.className = "closse";
-  spans.appendChild(txts);
-  li.appendChild(spans);
+  if(dateDiff(inputDue)) {  // dateDiff 있을때만 
+    var dueSpan = document.createElement("SPAN");
+    var dueTxts = document.createTextNode(" D - " + dateDiff(inputDue) + "");
+    dueSpan.className = "DueDate";
+    dueSpan.appendChild(dueTxts);
+    li.appendChild(dueSpan);
+  }
 
 
   for (i = 0; i < close.length; i++) {

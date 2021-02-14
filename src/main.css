@@ -3,18 +3,18 @@ body {
   min-width: 250px;
 }
 
-/* Include the padding and border in an element's total width and height */
+/* 모든 요소의 여백 간격 등을 균일하게 보여줘요  */
 * {
   box-sizing: border-box;
 }
 
-/* Remove margins and padding from the list */
+/* 리스트의 마진과 패딩을 제거해요 */
 ul {
   margin: 0;
   padding: 0;
 }
 
-/* Style the list items */
+/* 목록에 대한 css 스타일이예요  */
 ul li {
   cursor: pointer;
   position: relative;
@@ -24,31 +24,41 @@ ul li {
   font-size: 18px;
   transition: 0.2s;
   
-  /* make the list items unselectable */
+  /*  항목 기본값은 선택되지 않음이예요 */
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
 }
 
-/* Set all odd list items to a different color (zebra-stripes) */
+/* 홀수 항목은 배경을 다르게 해요 */
 ul li:nth-child(odd) {
   background: #f9f9f9;
 }
 
-/* Darker background-color on hover */
+/* 마우스 hover 하면 배경을 어둡게 해요 */
 ul li:hover {
   background: #ddd;
 }
 
-/* When clicked on, add a background color and strike out text */
+/* 아이템 체크하기 전이예요. 요소 맨 앞에 추가해요*/
+ul li::before {
+  content: 'o';
+  position: absolute;
+  top: 10px;
+  left: 16px;
+  height: 15px;
+  width: 7px;
+}
+
+/* 아이템을 클릭하면 아이템에 밑줄이 그어져요 */
 ul li.checked {
   background: #888;
   color: #fff;
-  text-decoration: line-through;
+  text-decoration: line-through; /* 글자에 밑줄 그어짐 */
 }
 
-/* Add a "checked" mark when clicked on */
+/* 아이템 (항목 ) 클릭 시 옆에 체크 박스를 두어요 */
 ul li.checked::before {
   content: '';
   position: absolute;
@@ -62,7 +72,7 @@ ul li.checked::before {
   width: 7px;
 }
 
-/* Style the close button */
+/* 닫기 버튼에 대한 css 스타일이예요 */
 .close {
   position: absolute;
   right: 0;
@@ -75,36 +85,35 @@ ul li.checked::before {
   color: white;
 }
 
-/* Style the header */
+/* 헤더 색상이예요 */
 .header {
-  background-color: #f44336;
+  background-color: hsl(210, 14%, 55%);
   padding: 30px 40px;
   color: white;
   text-align: center;
 }
 
-/* Clear floats after the header */
 .header:after {
   content: "";
   display: table;
-  clear: both;
+  clear: both;  /* 헤더랑 다음 요소 붙지 않게 (floats) 를 제거해요 */
 }
 
-/* Style the input */
+/* 내용 쓰는 칸 */
 input {
   margin: 0;
   border: none;
   border-radius: 0;
-  width: 75%;
+  width: 100%;
   padding: 10px;
   float: left;
   font-size: 16px;
 }
 
-/* Style the "Add" button */
+/* 항목 추가버튼 */
 .addBtn {
   padding: 10px;
-  width: 25%;
+  width: 100%;
   background: #d9d9d9;
   color: #555;
   float: left;
