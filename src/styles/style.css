@@ -1,120 +1,182 @@
-/* Basic Style */
-body {
-  background: #fff;
-  color: #333;
-  font-family: Lato, sans-serif;
+/* RESET RULES
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+@font-face {
+  font-family: "Summer";
+  src: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/Summer%20Font%20Regular.woff);
 }
-.container {
-  display: block;
-  width: 400px;
-  margin: 100px auto 0;
+
+@font-face {
+  font-family: "Summer Bold";
+  src: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/Summer%20Font%20Bold.woff);
 }
-ul {
-  margin: 0;
+
+:root {
+  --white: #fff;
+  --red: #e31b23;
+}
+
+* {
   padding: 0;
-}
-li * {
-  float: left;
-}
-li, h3 {
-  clear:both;
-  list-style:none;
-}
-input, button {
+  margin: 0;
+  border: none;
   outline: none;
+  box-sizing: border-box;
 }
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+input,
 button {
+  font-family: inherit;
+  font-size: 100%;
   background: none;
-  border: 0px;
-  color: #888;
-  font-size: 15px;
-  width: 60px;
-  margin: 10px 0 0;
-  font-family: Lato, sans-serif;
+}
+
+[type="checkbox"] {
+  position: absolute;
+  left: -9999px;
+}
+
+button,
+label {
   cursor: pointer;
 }
-button:hover {
-  color: #333;
+
+ol {
+  list-style: none;
 }
-/* Heading */
-h3,
-label[for='new-task'] {
-  color: #333;
-  font-weight: 700;
-  font-size: 15px;
-  border-bottom: 2px solid #333;
-  padding: 30px 0 10px;
-  margin: 0;
+
+body {
+  font: 28px/1.2 "Summer Bold";
+  margin: 1.5rem 0;
+}
+
+.container {
+  max-width: 700px;
+  padding: 0 10px;
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* MAIN RULES
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+/* .todo-form .form-wrapper,
+.todo-form input,
+.todo-form button,
+.todo-stats,
+.todo-stats > div {
+  position: relative;
+} */
+
+.todo-form .form-wrapper,
+.todo-form input,
+.todo-form button{
+  position: relative;
+}
+
+
+.todo-form input,
+.todo-form button{
+  z-index: 1;
+}
+
+.todo-form input,
+.todo-form button {
+  width: 100%;
+  padding: 15px;
+}
+
+.todo-form svg{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.todo-form button {
+  color: var(--white);
   text-transform: uppercase;
 }
-input[type="text"] {
-  margin: 0;
-  font-size: 18px;
-  line-height: 18px;
-  height: 18px;
-  padding: 10px;
-  border: 1px solid #ddd;
-  background: #fff;
-  border-radius: 6px;
-  font-family: Lato, sans-serif;
-  color: #888;
-}
-input[type="text"]:focus {
-  color: #333;
+
+.todo-list li {
+  display: grid;
+  align-items: baseline;
+  grid-template-columns: auto 20px;
+  grid-column-gap: 10px;
+  padding: 0 10px;
 }
 
-/* New Task */
-label[for='new-task'] {
+.todo-list li + li {
+  margin-top: 10px;
+}
+
+.todo-list .checkbox-wrapper {
+  display: flex;
+  align-items: baseline;
+}
+
+.todo-list .checkbox-wrapper label {
+  display: grid;
+  margin-right: 10px;
+}
+
+.todo-list .checkbox-wrapper svg {
+  grid-column: 1;
+  grid-row: 1;
+  width: 20px;
+  height: 20px;
+}
+
+.todo-list .checkbox-wrapper .checkmark {
+  display: none;
+}
+
+.todo-list [type="checkbox"]:checked + label .checkmark {
   display: block;
-  margin: 0 0 20px;
-}
-input#new-task {
-  float: left;
-  width: 318px;
-}
-p > button:hover {
-  color: #0FC57C;
 }
 
-/* Task list */
-li {
-  overflow: hidden;
-  padding: 20px 0;
-  border-bottom: 1px solid #eee;
-}
-li > input[type="checkbox"] {
-  margin: 0 10px;
-  position: relative;
-  top: 15px;
-}
-li > label {
-  font-size: 18px;
-  line-height: 40px;
-  width: 237px;
-  padding: 0 0 0 11px;
-}
-li >  input[type="text"] {
-  width: 226px;
-}
-li > .delete:hover {
-  color: #CF2323;
-}
-
-/* Completed */
-#completed-tasks label {
+.todo-list [type="checkbox"]:checked ~ span {
   text-decoration: line-through;
-  color: #888;
+  opacity: 0.5;
 }
 
-/* Edit Task */
-ul li input[type=text] {
-  display:none;
+.todo-list .remove-task {
+  display: flex;
+  padding: 2px;
 }
 
-ul li.editMode input[type=text] {
-  display:block;
+.todo-list .remove-task svg {
+  width: 16px;
+  height: 16px;
 }
 
-ul li.editMode label {
-  display:none;
+/* MQ STYLES
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+@media screen and (min-width: 600px) {
+  .todo-form {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-column-gap: 5px;
+  }
+}
+
+/* FOOTER
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.page-footer {
+  font-size: 1.2rem;
+  text-align: right;
+  padding-right: 20px;
+  margin-top: 20px;
+}
+
+.page-footer span {
+  color: var(--red);
 }
