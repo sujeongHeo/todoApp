@@ -42,19 +42,32 @@ export class ToDo {
 
         //update date 
         let btnDateEdit = document.querySelectorAll(".btn-date-edit");
-        console.log("btnDateEdit : ", btnDateEdit);
-        console.log("a : ", btnDateEdit);
         for (let eachBtn = 0; eachBtn < btnDateEdit.length; eachBtn++){
             console.log(btnDateEdit[eachBtn], "여기! ");
             btnDateEdit[eachBtn].addEventListener("click", (e) =>{
-                console.log(e.target.closest("li"), "sdfsdfdsfsdf");
-                console.log(e.target.previousElementSibling, "예기 ?");
-                console.log("여기 뭐야 ? ", e.target.HTML);
                 let closeDate = e.target.previousElementSibling;
                 closeDate.classList.toggle('hideDate');
                 // e.target.appenkdChild();
             });
         }
+
+
+        //update date with input
+        let dateEditForm = document.querySelectorAll(".date-edit-form");
+        console.log("dateEditForm : ", dateEditForm);
+        console.log("a : ", btnDateEdit);
+        for (let eachDt = 0; eachDt < dateEditForm.length; eachDt++){
+            console.log(dateEditForm[eachDt], "여기! ");
+            dateEditForm[eachDt].addEventListener("click", (e) =>{
+                console.log("여기 뭐야 ? ", e.target.value);
+                // e.target.appenkdChild();
+            });
+            dateEditForm[eachDt].addEventListener("change", (e) =>{
+                console.log("여기1 뭐야 ? ", e.target.value);
+                // e.target.appenkdChild();
+            });
+        }
+
 
         // prevent new lines with Enter
         this.todoList.addEventListener("keydown", function (e) {

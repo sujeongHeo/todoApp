@@ -164,10 +164,6 @@ h1 {
   font-size: 90%;
 }
 
-.date-edit-enable {
-  display : block;
-}
-
 .date-edit-disable{
   display : none;
 }
