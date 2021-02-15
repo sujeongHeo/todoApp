@@ -79,6 +79,7 @@ h1 {
 .todo-form input,
 .todo-form button{
   position: relative;
+  margin: auto;  
 }
 
 
@@ -148,7 +149,7 @@ h1 {
   opacity: 0.5;
 }
 
-.todo-list .remove-task {
+.todo-list .remove-task, .todo-list .remainingDate, {
   display: flex;
   padding: 2px;
 }
@@ -157,6 +158,36 @@ h1 {
   width: 16px;
   height: 16px;
 }
+
+.remaining-date {
+  color : red;
+  font-size: 90%;
+}
+
+.date-edit-enable {
+  display : block;
+}
+
+.date-edit-disable{
+  display : none;
+}
+
+.date-edit-form{
+  font-size:20px;
+  color:blue;
+}
+
+.btn-date-edit{
+    border : 1px black solid;
+    color: white;
+    background-color: black;
+    font-size : 20px;
+}
+
+.hideDate {
+  display: none;
+}
+
 
 /* MQ STYLES
 –––––––––––––––––––––––––––––––––––––––––––––––––– */

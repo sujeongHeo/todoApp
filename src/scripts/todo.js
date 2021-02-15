@@ -1,5 +1,6 @@
-export class ToDo {
 
+import { dateDiff } from './timeDiff.js';
+export class ToDo {
     constructor(todoFormName, todoListName, totalTasksName, completedTasksName, remainingTasksName, tasks){
         this.todoForm = document.querySelector(todoFormName);
         this.todoList = document.querySelector(todoListName);
@@ -18,10 +19,7 @@ export class ToDo {
         }
 
         // submit form
-        console.log(this.tasks, ":::",this.todoForm);
-
         this.clickAdd();
-
 
         // remove task
         this.todoList.addEventListener("click", (e) => {
@@ -34,11 +32,29 @@ export class ToDo {
         }
         });
 
-        // update task - change status or name
+        // update task - change status or content
+        console.log(this.todoList, "여기 뭐야 ??ㄴ");
         this.todoList.addEventListener("input", (e) => {
-            const taskId = e.target.closest("li").id;
+            console.log("여기 오니 ?");
+            const taskId = e.target.closest("li");
             this.updateTask(taskId, e.target);
         });
+
+        //update date 
+        let btnDateEdit = document.querySelectorAll(".btn-date-edit");
+        console.log("btnDateEdit : ", btnDateEdit);
+        console.log("a : ", btnDateEdit);
+        for (let eachBtn = 0; eachBtn < btnDateEdit.length; eachBtn++){
+            console.log(btnDateEdit[eachBtn], "여기! ");
+            btnDateEdit[eachBtn].addEventListener("click", (e) =>{
+                console.log(e.target.closest("li"), "sdfsdfdsfsdf");
+                console.log(e.target.previousElementSibling, "예기 ?");
+                console.log("여기 뭐야 ? ", e.target.HTML);
+                let closeDate = e.target.previousElementSibling;
+                closeDate.classList.toggle('hideDate');
+                // e.target.appenkdChild();
+            });
+        }
 
         // prevent new lines with Enter
         this.todoList.addEventListener("keydown", function (e) {
@@ -56,38 +72,38 @@ export class ToDo {
 
         todoForm.addEventListener("submit", function (e) {
             e.preventDefault();
-            const input = this.name;
-            const inputValue = input.value;
+            const myContent = this.myContent;
+            const myDue = this.myDue;
+
+            const myContentValue = myContent.value;
+            const myDueValue = myDue.value;
     
-            if (inputValue != "") {
+            if (myContentValue != "") { // 빈칸이 아니라면 
                 const task = {
-                id: new Date().getTime(),
-                name: inputValue,
+                id: myContentValue + "-" + new Date().getTime(),
+                content: myContentValue,
+                dueDate : myDueValue,
+                remainingDate : dateDiff(myDueValue)? "  D-" + dateDiff(myDueValue) : "",
                 isCompleted: false
                 };
-                
-                console.log(tasks, "여기");
-                console.log(todoForm, " todoForm 여기");
                 tasks.push(task);
                 localStorage.setItem("tasks", JSON.stringify(tasks));
                 createTask(task, todoList);
                 todoForm.reset();
             }
-            input.focus();
+            myContent.focus(); // 내용 입력칸에 focus 를 둔다 
         });
     }
     
     createTask(task, todoList) {
-        console.log(task, "여기 안와?");
-        console.log(todoList, "sdf??");
         const taskEl = document.createElement("li");
         taskEl.setAttribute("id", task.id);
         const taskElMarkup = `
             <div class="checkbox-wrapper">
-            <input type="checkbox" id="${task.name}-${task.id}" name="tasks" ${
+            <input type="checkbox" id="${task.content}-${task.id}" name="tasks" ${
             task.isCompleted ? "checked" : ""
         }>
-            <label for="${task.name}-${task.id}">
+            <label for="${task.content}-${task.id}">
                 <svg class="checkbox-empty">
                 <use xlink:href="#checkbox_empty"></use>
                 </svg>
@@ -95,11 +111,14 @@ export class ToDo {
                 <use xlink:href="#checkmark"></use>
                 </svg>
             </label>
-            <span ${!task.isCompleted ? "contenteditable" : ""}>${task.name}</span>
+            <span ${!task.isCompleted ? "contenteditable" : ""}>${task.content}</span>
+            <span class="remaining-date" value="${task.dueDate ? task.dueDate : ""}">${task.remainingDate? "  " + task.remainingDate : ""}</span>
+            <input type="date" class="date-edit-form" id="${task.content}-${task.dueDate}-form" value="${task.dueDate}">
+            <button class="btn-date-edit" id="${task.content}-${task.dueDate}-date-btn">날짜 수정</button>
             </div>
-            <button class="remove-task" title="Remove ${task.name} task">
+            <button class="remove-task" title="Remove ${task.content} task">
             <svg>
-                <use xlink:href="#close"></use>
+            <use xlink:href="#close"></use>
             </svg>
             </button>
         `;
@@ -109,18 +128,20 @@ export class ToDo {
 
     removeTask(taskId) {
         let tasks = this.tasks;
-        tasks = tasks.filter((task) => task.id !== parseInt(taskId));
+        tasks = tasks.filter((task) => task.id !== taskId);
         localStorage.setItem("tasks", JSON.stringify(tasks));
         document.getElementById(taskId).remove();
     }
 
     updateTask(taskId, el) {
+        console.log(el, "sdf")
         let tasks = this.tasks;
         const task = tasks.find((task) => task.id === parseInt(taskId));
 
         if (el.hasAttribute("contentEditable")) {
-            task.name = el.textContent;
+            task.content = el.textContent;
         } else {
+            console.log("여기로 오지 ?");
             const span = el.nextElementSibling.nextElementSibling;
             task.isCompleted = !task.isCompleted;
             if (task.isCompleted) {
